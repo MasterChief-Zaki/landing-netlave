@@ -48,3 +48,21 @@
 .contactButton {
   margin-left: auto;
 }
+
+// Hidden until focused, so keyboard users can jump past the header.
+.skipLink {
+  position: fixed;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 20;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-small);
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: none;
+  }
+}
