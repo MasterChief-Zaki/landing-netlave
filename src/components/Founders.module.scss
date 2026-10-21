@@ -1,0 +1,51 @@
+@use "../styles/breakpoints" as *;
+
+.founderList {
+  margin-top: var(--space-xl);
+}
+
+// Phone: photo beside the name, bio below. Tablet and up: photo, name and bio in one row.
+.founder {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--space-md);
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+
+  @media (width >= $tablet-min-width) {
+    grid-template-columns: 6rem 16rem 1fr;
+    column-gap: var(--space-xl);
+    padding-block: var(--space-xl);
+  }
+}
+
+.photoPlaceholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.founderRole {
+  margin-top: var(--space-xs);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.founderBio {
+  grid-column: 1 / -1;
+  max-width: 62ch;
+  color: var(--color-text-muted);
+
+  @media (width >= $tablet-min-width) {
+    grid-column: auto;
+  }
+}
