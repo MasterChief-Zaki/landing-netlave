@@ -1,0 +1,62 @@
+@use "../styles/breakpoints" as *;
+
+.steps {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+
+  @media (width >= $tablet-min-width) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Phone: number on the left of the text. Tablet and up: number above, arrows between steps.
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: var(--space-md);
+
+  @media (width >= $tablet-min-width) {
+    display: block;
+
+    & + &::before {
+      content: "→" / "";
+      position: absolute;
+      top: 0.5rem;
+      left: calc(var(--space-xl) / -2);
+      font-family: var(--font-family-mono);
+      color: var(--color-accent);
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.stepNumber {
+  display: grid;
+  grid-row: span 2;
+  align-self: start;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+
+  @media (width >= $tablet-min-width) {
+    margin-bottom: var(--space-md);
+  }
+}
+
+.stepTitle,
+.stepDescription {
+  grid-column: 2;
+}
+
+.stepDescription {
+  margin-top: var(--space-xs);
+  color: var(--color-text-muted);
+}
