@@ -17,18 +17,18 @@
   --color-mist: #c2dfd2;
   --color-moon: #f4fbf9;
 
-  // Colors: a dark page with light text and sage actions.
-  // Lagoon and deep teal are too dark to read on midnight, so text, actions
-  // and focus outlines use the lighter palette colors instead.
+  // Colors: a midnight page with moon text and lagoon buttons.
+  // Lagoon and deep teal are too dark for text on midnight, so they only fill
+  // buttons; text uses the lighter palette colors.
   --color-background: var(--color-midnight);
   --color-surface: var(--color-deep-navy);
   --color-border: var(--color-teal);
   --color-control-border: var(--color-teal);
   --color-text: var(--color-moon);
   --color-text-muted: var(--color-seafoam);
-  --color-primary: var(--color-sage);
-  --color-primary-hover: var(--color-seafoam);
-  --color-on-primary: var(--color-midnight);
+  --color-primary: var(--color-lagoon);
+  --color-primary-hover: var(--color-deep-teal);
+  --color-on-primary: var(--color-moon);
   --color-accent: var(--color-sage);
 
   // Typography: the font variables come from next/font in layout.tsx
