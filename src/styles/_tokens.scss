@@ -3,16 +3,32 @@
 // Design tokens: the single source for colors, type, spacing and layout.
 // Components use these custom properties instead of hard-coded values.
 :root {
-  // Colors: beige backgrounds, navy text and actions
-  --color-background: #f4ede1;
-  --color-surface: #e9dfcc;
-  --color-border: #d5c7ae;
-  --color-text: #14213d;
-  --color-text-muted: #4b5670;
-  --color-primary: #14213d;
-  --color-primary-hover: #0b1426;
-  --color-on-primary: #f4ede1;
-  --color-accent: #2f4b7c;
+  // Native scrollbars and controls match the dark page
+  color-scheme: dark;
+
+  // Palette: the night palette, from darkest to lightest
+  --color-midnight: #021d28;
+  --color-deep-navy: #05263b;
+  --color-lagoon: #095b76;
+  --color-deep-teal: #266b81;
+  --color-teal: #3f858b;
+  --color-sage: #5d9e9c;
+  --color-seafoam: #9ec9bc;
+  --color-mist: #c2dfd2;
+  --color-moon: #f4fbf9;
+
+  // Colors: a dark page with light text and sage actions.
+  // Lagoon and deep teal are too dark to read on midnight, so text, actions
+  // and focus outlines use the lighter palette colors instead.
+  --color-background: var(--color-midnight);
+  --color-surface: var(--color-deep-navy);
+  --color-border: var(--color-teal);
+  --color-text: var(--color-moon);
+  --color-text-muted: var(--color-seafoam);
+  --color-primary: var(--color-sage);
+  --color-primary-hover: var(--color-seafoam);
+  --color-on-primary: var(--color-midnight);
+  --color-accent: var(--color-sage);
 
   // Typography: the font variables come from next/font in layout.tsx
   --font-family-sans: var(--font-space-grotesk), system-ui, sans-serif;
