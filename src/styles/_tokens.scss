@@ -19,10 +19,10 @@
 
   // Colors: a midnight page with moon text and lagoon buttons.
   // Lagoon and deep teal are too dark for text on midnight, so they only fill
-  // buttons; text uses the lighter palette colors.
+  // buttons and draw decorative dividers; text uses the lighter palette colors.
   --color-background: var(--color-midnight);
   --color-surface: var(--color-deep-navy);
-  --color-border: var(--color-teal);
+  --color-border: var(--color-lagoon);
   --color-control-border: var(--color-teal);
   --color-text: var(--color-moon);
   --color-text-muted: var(--color-seafoam);
