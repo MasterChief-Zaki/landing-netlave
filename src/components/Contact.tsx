@@ -1,4 +1,3 @@
-import buttonStyles from "@/styles/buttons.module.scss";
 import layoutStyles from "@/styles/layout.module.scss";
 import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Contact.module.scss";
@@ -33,15 +32,9 @@ export function Contact() {
             [One sentence on what to reach out about: partnerships, pilots or
             investment]
           </p>
-          <div className={styles.emailDetails}>
-            <a
-              className={buttonStyles.primaryButton}
-              href={`mailto:${contactEmail}`}
-            >
-              Email the founders
-            </a>
-            <p className={styles.emailAddress}>{contactEmail}</p>
-          </div>
+          <a className={styles.emailLink} href={`mailto:${contactEmail}`}>
+            {contactEmail} <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
