@@ -1,10 +1,12 @@
 import buttonStyles from "@/styles/buttons.module.scss";
 import layoutStyles from "@/styles/layout.module.scss";
+import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Hero.module.scss";
 
 export function Hero() {
   return (
     <section className={styles.hero}>
+      <NetLaveScene variant="both" className={styles.heroScene} />
       <div className={`${layoutStyles.container} ${styles.heroContent}`}>
         <p className={styles.eyebrow}>[Category, e.g. smart irrigation]</p>
         <h1 className={styles.headline}>[The pitch in one line]</h1>
