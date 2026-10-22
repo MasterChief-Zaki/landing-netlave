@@ -25,17 +25,20 @@
 
   &:hover {
     background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
   }
 }
 
 .secondaryButton {
   @include button-base;
 
-  color: var(--color-primary);
+  color: var(--color-text);
   background: transparent;
+  border-color: var(--color-control-border);
 
   &:hover {
     color: var(--color-on-primary);
     background: var(--color-primary);
+    border-color: var(--color-primary);
   }
 }
