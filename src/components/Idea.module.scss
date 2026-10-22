@@ -1,62 +1,95 @@
 @use "../styles/breakpoints" as *;
 
-.steps {
+// Text on the left and, from desktop, the 3D knot figure on the right.
+.introduction {
   display: grid;
-  gap: var(--space-xl);
-  margin-top: var(--space-xl);
+  gap: var(--space-2xl);
+  align-items: center;
 
-  @media (width >= $tablet-min-width) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (width >= $desktop-min-width) {
+    grid-template-columns: 1fr 30rem;
   }
 }
 
-// Phone: number on the left of the text. Tablet and up: number above, arrows between steps.
-.step {
+.ideaHeading {
+  max-width: 16ch;
+}
+
+.knotFigure {
   position: relative;
+  width: 100%;
+  max-width: 30rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+.knotScene {
+  position: absolute;
+  inset: 0;
+}
+
+.knotCaption {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 1.25rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label);
+  color: var(--color-text-muted);
+}
+
+.steps {
+  margin-top: var(--space-3xl);
+
+  @media (width >= $desktop-min-width) {
+    margin-top: var(--space-4xl);
+  }
+}
+
+// Hairline-divided rows with a large numeral. From desktop the rows step in,
+// one column further each time.
+.step {
   display: grid;
-  grid-template-columns: 2.5rem 1fr;
-  column-gap: var(--space-md);
+  gap: var(--space-md);
+  padding-block: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+
+  &:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
 
   @media (width >= $tablet-min-width) {
-    display: block;
+    grid-template-columns: 10rem 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
 
-    & + &::before {
-      content: "→" / "";
-      position: absolute;
-      top: 0.5rem;
-      left: calc(var(--space-xl) / -2);
-      font-family: var(--font-family-mono);
-      color: var(--color-accent);
-      transform: translateX(-50%);
+  @media (width >= $desktop-min-width) {
+    &:nth-child(2) {
+      margin-left: 10rem;
+    }
+
+    &:nth-child(3) {
+      margin-left: 20rem;
     }
   }
 }
 
 .stepNumber {
-  display: grid;
-  grid-row: span 2;
-  align-self: start;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-small);
-  font-weight: 600;
+  font-size: var(--font-size-numeral);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: var(--letter-spacing-heading);
   color: var(--color-accent);
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-
-  @media (width >= $tablet-min-width) {
-    margin-bottom: var(--space-md);
-  }
 }
 
-.stepTitle,
-.stepDescription {
-  grid-column: 2;
+.stepTitle {
+  line-height: 1.2;
 }
 
 .stepDescription {
-  margin-top: var(--space-xs);
+  max-width: 40ch;
   color: var(--color-text-muted);
 }
