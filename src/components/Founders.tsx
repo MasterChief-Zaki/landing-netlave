@@ -27,22 +27,31 @@ export function Founders() {
       aria-labelledby="founders-heading"
     >
       <div className={layoutStyles.container}>
-        <p className={layoutStyles.sectionLabel}>02 — Founders</p>
-        <h2 id="founders-heading" className={layoutStyles.sectionHeading}>
-          Meet the founders
-        </h2>
-        <p className={layoutStyles.sectionIntro}>
-          [One line on what the founders share: field, studies or previous work]
-        </p>
+        <div className={styles.foundersHeader}>
+          <div>
+            <p className={layoutStyles.sectionLabel}>02 — Founders</p>
+            <h2
+              id="founders-heading"
+              className={`${layoutStyles.sectionHeading} ${styles.foundersHeading}`}
+            >
+              Meet the
+              <br />
+              founders
+            </h2>
+          </div>
+          <p className={`${layoutStyles.sectionIntro} ${styles.foundersIntro}`}>
+            [One line on what the founders share: field, studies or previous
+            work]
+          </p>
+        </div>
         <ul className={styles.founderList}>
           {founders.map((founder) => (
             <li key={founder.name} className={styles.founder}>
-              <div className={styles.photoPlaceholder} aria-hidden="true">
-                Photo
-              </div>
-              <div>
-                <h3>{founder.name}</h3>
-                <p className={styles.founderRole}>{founder.role}</p>
+              <div className={styles.portrait}>
+                <div className={styles.portraitCaption}>
+                  <h3 className={styles.founderName}>{founder.name}</h3>
+                  <p className={styles.founderRole}>{founder.role}</p>
+                </div>
               </div>
               <p className={styles.founderBio}>{founder.bio}</p>
             </li>
