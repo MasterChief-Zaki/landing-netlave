@@ -47,12 +47,11 @@ export function Founders() {
         <ul className={styles.founderList}>
           {founders.map((founder) => (
             <li key={founder.name} className={styles.founder}>
-              <div className={styles.photoPlaceholder} aria-hidden="true">
-                Photo
-              </div>
-              <div>
-                <h3>{founder.name}</h3>
-                <p className={styles.founderRole}>{founder.role}</p>
+              <div className={styles.portrait}>
+                <div className={styles.portraitCaption}>
+                  <h3 className={styles.founderName}>{founder.name}</h3>
+                  <p className={styles.founderRole}>{founder.role}</p>
+                </div>
               </div>
               <p className={styles.founderBio}>{founder.bio}</p>
             </li>
