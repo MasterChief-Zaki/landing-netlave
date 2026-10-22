@@ -1,10 +1,18 @@
 @use "../styles/breakpoints" as *;
 
 .hero {
+  position: relative;
+  overflow: hidden;
   border-bottom: 1px solid var(--color-border);
 }
 
+.heroScene {
+  position: absolute;
+  inset: 0;
+}
+
 .heroContent {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
