@@ -17,6 +17,11 @@ const founders = [
     role: "[Role]",
     bio: "[Two or three lines: background, relevant work and responsibility in the project]",
   },
+  {
+    name: "[Founder 4 name]",
+    role: "[Role]",
+    bio: "[Two or three lines: background, relevant work and responsibility in the project]",
+  },
 ];
 
 export function Founders() {
