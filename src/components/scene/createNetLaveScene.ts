@@ -41,6 +41,10 @@ interface SceneOptions {
 const environmentMapUrl = "/scene/studio_small_08_1k.hdr";
 const waterNormalMapUrl = "/scene/water-normal-1k.png";
 
+function clampToUnitRange(value: number): number {
+  return Math.max(-1, Math.min(1, value));
+}
+
 function readColorToken(element: HTMLElement, tokenName: string): Color {
   return new Color(
     getComputedStyle(element).getPropertyValue(tokenName).trim(),
@@ -228,12 +232,17 @@ export function createNetLaveScene(
   }
 
   // Parallax follows the pointer over the whole window, so text laid on top
-  // of the scene doesn't block it.
+  // of the scene doesn't block it. Positions outside the scene are clamped to
+  // its edges so the tilt never exceeds the designed range.
   const pointerTarget = { x: 0, y: 0 };
   const handlePointerMove = (event: PointerEvent) => {
     const bounds = container.getBoundingClientRect();
-    pointerTarget.x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
-    pointerTarget.y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+    pointerTarget.x = clampToUnitRange(
+      ((event.clientX - bounds.left) / bounds.width - 0.5) * 2,
+    );
+    pointerTarget.y = clampToUnitRange(
+      ((event.clientY - bounds.top) / bounds.height - 0.5) * 2,
+    );
   };
   window.addEventListener("pointermove", handlePointerMove);
 
