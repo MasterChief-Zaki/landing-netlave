@@ -13,10 +13,7 @@ export function Contact() {
       aria-labelledby="contact-heading"
     >
       <div className={layoutStyles.container}>
-        <p className={layoutStyles.sectionLabel}>
-          <span className={layoutStyles.sectionNumber}>03</span>
-          Contact
-        </p>
+        <p className={layoutStyles.sectionLabel}>03 — Contact</p>
         <div className={styles.contactContent}>
           <div>
             <h2 id="contact-heading" className={layoutStyles.sectionHeading}>

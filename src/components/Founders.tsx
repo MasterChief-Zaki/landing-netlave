@@ -27,10 +27,7 @@ export function Founders() {
       aria-labelledby="founders-heading"
     >
       <div className={layoutStyles.container}>
-        <p className={layoutStyles.sectionLabel}>
-          <span className={layoutStyles.sectionNumber}>02</span>
-          Founders
-        </p>
+        <p className={layoutStyles.sectionLabel}>02 — Founders</p>
         <h2 id="founders-heading" className={layoutStyles.sectionHeading}>
           Meet the founders
         </h2>
