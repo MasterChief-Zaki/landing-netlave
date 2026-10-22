@@ -1,5 +1,30 @@
 @use "../styles/breakpoints" as *;
 
+// Heading on the left and, from tablet, the introduction aligned to its baseline on the right.
+.foundersHeader {
+  @media (width >= $tablet-min-width) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-xl);
+  }
+}
+
+.foundersHeading {
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+}
+
+.foundersIntro {
+  @media (width >= $tablet-min-width) {
+    max-width: 34ch;
+    padding-bottom: 0.75rem;
+    text-align: right;
+    text-wrap: pretty;
+  }
+}
+
 .founderList {
   margin-top: var(--space-xl);
 }
