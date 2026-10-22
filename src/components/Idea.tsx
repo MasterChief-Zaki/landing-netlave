@@ -24,10 +24,7 @@ export function Idea() {
       aria-labelledby="idea-heading"
     >
       <div className={layoutStyles.container}>
-        <p className={layoutStyles.sectionLabel}>
-          <span className={layoutStyles.sectionNumber}>01</span>
-          The idea
-        </p>
+        <p className={layoutStyles.sectionLabel}>01 — The idea</p>
         <h2 id="idea-heading" className={layoutStyles.sectionHeading}>
           [The problem, or the idea, in one sentence]
         </h2>

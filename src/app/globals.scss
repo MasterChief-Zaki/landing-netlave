@@ -28,11 +28,13 @@ h2,
 h3 {
   font-weight: 500;
   line-height: var(--line-height-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 h1 {
   font-size: var(--font-size-heading-1);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
 }
 
 h2 {

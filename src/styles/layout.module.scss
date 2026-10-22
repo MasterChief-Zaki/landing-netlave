@@ -10,34 +10,18 @@
 }
 
 .section {
-  padding-block: var(--space-2xl);
-  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-3xl);
 
-  @media (width >= $tablet-min-width) {
-    padding-block: var(--space-3xl);
+  @media (width >= $desktop-min-width) {
+    padding-block: var(--space-4xl);
   }
 }
 
 .sectionLabel {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
   font-family: var(--font-family-mono);
-  font-size: var(--font-size-small);
-  letter-spacing: 0.12em;
+  font-size: var(--font-size-label);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
-
-  &::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--color-border);
-  }
-}
-
-.sectionNumber {
-  font-weight: 600;
   color: var(--color-accent);
 }
 

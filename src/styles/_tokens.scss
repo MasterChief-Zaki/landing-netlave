@@ -34,14 +34,21 @@
   // Typography: the font variables come from next/font in layout.tsx
   --font-family-sans: var(--font-space-grotesk), system-ui, sans-serif;
   --font-family-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-size-label: 0.75rem;
   --font-size-small: 0.875rem;
   --font-size-body: 1rem;
-  --font-size-lead: 1.125rem;
-  --font-size-heading-3: 1.25rem;
-  --font-size-heading-2: clamp(1.75rem, 1.25rem + 2.2vw, 2.5rem);
-  --font-size-heading-1: clamp(2.25rem, 1.5rem + 4vw, 3.75rem);
+  --font-size-lead: 1.1875rem;
+  --font-size-heading-3: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  --font-size-heading-2: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  --font-size-heading-1: clamp(3rem, 1.25rem + 7.5vw, 7.5rem);
+  --font-size-display: clamp(3rem, 1rem + 8vw, 7rem);
+  --font-size-numeral: clamp(3rem, 2rem + 3vw, 4.5rem);
+  --font-size-wordmark: clamp(4.5rem, 1rem + 15vw, 12.5rem);
   --line-height-body: 1.65;
-  --line-height-heading: 1.15;
+  --line-height-heading: 1.02;
+  --line-height-display: 0.95;
+  --letter-spacing-heading: -0.04em;
+  --letter-spacing-display: -0.05em;
 
   // Spacing: 4px base
   --space-xs: 0.25rem;
@@ -51,6 +58,7 @@
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
   --space-3xl: 6rem;
+  --space-4xl: 7.5rem;
 
   // Layout
   --content-max-width: 70rem;
