@@ -21,7 +21,7 @@ export function Idea() {
   return (
     <section
       id="idea"
-      className={layoutStyles.section}
+      className={`${layoutStyles.section} ${styles.ideaSection}`}
       aria-labelledby="idea-heading"
     >
       <div className={layoutStyles.container}>

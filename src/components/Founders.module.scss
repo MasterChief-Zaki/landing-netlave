@@ -1,5 +1,13 @@
 @use "../styles/breakpoints" as *;
 
+// Founders follows the idea steps directly, so the idea's bottom padding is
+// the only gap. The scroll margin keeps the nav link from landing it flush
+// against the header.
+.foundersSection {
+  padding-top: 0;
+  scroll-margin-top: var(--space-xl);
+}
+
 // Heading on the left and, from tablet, the introduction aligned to its baseline on the right.
 .foundersHeader {
   @media (width >= $tablet-min-width) {

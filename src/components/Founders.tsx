@@ -23,7 +23,7 @@ export function Founders() {
   return (
     <section
       id="founders"
-      className={layoutStyles.section}
+      className={`${layoutStyles.section} ${styles.foundersSection}`}
       aria-labelledby="founders-heading"
     >
       <div className={layoutStyles.container}>
