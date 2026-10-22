@@ -16,9 +16,10 @@
 - Fonts stay Space Grotesk and IBM Plex Mono. Only the sizes, line heights and tracking change (Task 2).
 - Buttons keep their current styles (`buttons.module.scss` is not touched).
 - three.js comes from pnpm (`three`, plus `@types/three` as a dev dependency). No CDN imports.
+- three.js is lazy loaded and must never block rendering. No file outside `src/components/scene/createNetLaveScene.ts` imports `three` statically. The page's server HTML and its initial client JS don't contain three.js. It is fetched only after hydration, once a scene container is near the viewport and the browser is idle.
 - Scene assets live in `public/scene/`: copy `studio_small_08_1k.hdr` (1.5 MB) and `water-normal-1k.png` (158 KB) from `../../Design system color update/assets/`. The 4K HDR, the 4096px normal maps and `render.png` (a stitched elevation map that 3a doesn't use) are not copied.
 - Use pnpm only. Every commit must pass the Husky hook. Never use `--no-verify`.
-- Branches: one epic, `epic/3d-layout-skeleton`, branched from `design/update-color-palette` (PR #4, the night palette, is still open). One `feature/<name>` branch per task, branched from the epic and merged back with `git merge --no-ff` using the message `Merge feature/<name> into the 3D layout skeleton epic`. One PR, epic → `main`.
+- Branches: one epic, `epic/3d-layout-skeleton`, branched from `main` (which includes the night palette from PR #4). One `feature/<name>` branch per task, branched from the epic and merged back with `git merge --no-ff` using the message `Merge feature/<name> into the 3D layout skeleton epic`. One PR, epic → `main`.
 - Commits are atomic and use plain-English summaries in the style of `git log`. No `feat:` prefixes. No AI attribution: no `Co-Authored-By` lines and no "Generated with" lines in commits or PRs.
 - Use clear, descriptive names for components, CSS classes and variables. Mobile-first SCSS with `$tablet-min-width` (768px) and `$desktop-min-width` (1024px) from `_breakpoints.scss`.
 - There's no test runner, and none gets added (AGENTS.md: no speculative dependencies). The checks for each task are `pnpm typecheck && pnpm lint && pnpm lint:styles && pnpm format:check && pnpm build` plus a browser check with the Playwright MCP against `pnpm dev`, at 375px and 1280px wide.
@@ -35,9 +36,9 @@
 
 ### Task 0: Epic branch and PR
 
-- [ ] **Step 1:** `git switch design/update-color-palette && git pull`, then `git switch -c epic/3d-layout-skeleton`.
-- [ ] **Step 2:** Commit this plan: `git add docs/superpowers/plans/2026-10-22-3d-layout-skeleton.md && git commit -m "Add the plan for the 3D layout skeleton"`.
-- [ ] **Step 3:** `git push -u origin epic/3d-layout-skeleton`, then open a **draft** PR to `main` titled `Move the landing page to the 3D layout skeleton`. The body lists the feature branches as a checklist and notes that it depends on #4.
+- [x] **Step 1:** `git switch -c epic/3d-layout-skeleton origin/main` (rebased onto `main` after #4 merged).
+- [x] **Step 2:** Commit this plan: `git add docs/superpowers/plans/2026-10-22-3d-layout-skeleton.md && git commit -m "Add the plan for the 3D layout skeleton"`.
+- [x] **Step 3:** `git push -u origin epic/3d-layout-skeleton`, then open a **draft** PR to `main` titled `Move the landing page to the 3D layout skeleton`. The body lists the feature branches as a checklist.
 
 ### Task 1: 3D scene component — `feature/3d-scene`
 
@@ -53,7 +54,7 @@
 
 - `export type SceneVariant = "both" | "knot" | "field";`
 - `export function createNetLaveScene(container: HTMLElement, options: { variant: SceneVariant; speed: number }): () => void` — builds the scene and returns `dispose`.
-- `export function NetLaveScene(props: { variant: SceneVariant; speed?: number; className?: string })` is a `"use client"` component. It renders `<div className={className} aria-hidden="true" />`. In `useEffect` it runs `import("./createNetLaveScene")`, calls `createNetLaveScene` unless the effect was already cleaned up, and calls `dispose` on cleanup. If the import fails, it logs `console.error` and nothing else. `speed` defaults to `1`.
+- `export function NetLaveScene(props: { variant: SceneVariant; speed?: number; className?: string })` is a `"use client"` component. It renders `<div className={className} aria-hidden="true" />`. In `useEffect` it waits until the container is within `200px` of the viewport (`IntersectionObserver`, `rootMargin: "200px"`) and the browser is idle (`requestIdleCallback`, falling back to `setTimeout(…, 200)`). Only then does it run `import("./createNetLaveScene")`, and it calls `createNetLaveScene` unless the effect was already cleaned up, and calls `dispose` on cleanup. If the import fails, it logs `console.error` and nothing else. `speed` defaults to `1`.
 
 - [ ] **Step 1:** `git switch -c feature/3d-scene epic/3d-layout-skeleton`, then `pnpm add three` and `pnpm add -D @types/three`. Commit `package.json` and `pnpm-lock.yaml` together: `Add three.js`.
 - [ ] **Step 2:** Copy the two assets into `public/scene/`. Commit: `Add the studio HDR and water normal map for the 3D scenes`.
@@ -73,6 +74,7 @@
   - Count `requestAnimationFrame` calls with an init script. Scroll to the bottom, and over one second the count stays at 0.
   - With `emulateMedia({ reducedMotion: "reduce" })`, two screenshots taken 1s apart match.
   - With an init script that makes `HTMLCanvasElement.prototype.getContext` return `null`, the hero text still renders and there are no uncaught console errors.
+  - Lazy loading. After `pnpm build`, no JS chunk referenced by a `<script>` in `.next/server/app/index.html` contains `WebGLRenderer`. In the browser, the network log shows the three.js chunk requested only after `DOMContentLoaded`, and with three.js blocked the hero text paints the same.
 - [ ] **Step 7:** `git switch epic/3d-layout-skeleton && git merge --no-ff feature/3d-scene -m "Merge feature/3d-scene into the 3D layout skeleton epic" && git push`.
 
 ### Task 2: Type scale and section rhythm — `feature/type-scale`
