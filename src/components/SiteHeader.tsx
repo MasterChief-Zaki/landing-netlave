@@ -16,12 +16,15 @@ export function SiteHeader() {
             NetLave
           </Link>
           <nav className={styles.navigation} aria-label="Primary">
-            {navigationLinks.map((navigationLink) => (
+            {navigationLinks.map((navigationLink, linkIndex) => (
               <a
                 key={navigationLink.href}
                 className={styles.navigationLink}
                 href={navigationLink.href}
               >
+                <span className={styles.navigationNumber} aria-hidden="true">
+                  {String(linkIndex + 1).padStart(2, "0")}
+                </span>
                 {navigationLink.label}
               </a>
             ))}
