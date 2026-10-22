@@ -1,5 +1,45 @@
 @use "../styles/breakpoints" as *;
 
+// Text on the left and, from desktop, the 3D knot figure on the right.
+.introduction {
+  display: grid;
+  gap: var(--space-2xl);
+  align-items: center;
+
+  @media (width >= $desktop-min-width) {
+    grid-template-columns: 1fr 30rem;
+  }
+}
+
+.ideaHeading {
+  max-width: 16ch;
+}
+
+.knotFigure {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+.knotScene {
+  position: absolute;
+  inset: 0;
+}
+
+.knotCaption {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 1.25rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label);
+  color: var(--color-text-muted);
+}
+
 .steps {
   display: grid;
   gap: var(--space-xl);
