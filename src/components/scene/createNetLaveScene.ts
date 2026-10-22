@@ -23,6 +23,7 @@ import {
   TorusKnotGeometry,
   Vector2,
   WebGLRenderer,
+  type WebGLRenderTarget,
 } from "three";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 
@@ -39,6 +40,10 @@ interface SceneOptions {
 // Studio HDRI (Poly Haven, CC0) lights everything; the normal map ripples the water.
 const environmentMapUrl = "/scene/studio_small_08_1k.hdr";
 const waterNormalMapUrl = "/scene/water-normal-1k.png";
+
+function clampToUnitRange(value: number): number {
+  return Math.max(-1, Math.min(1, value));
+}
 
 function readColorToken(element: HTMLElement, tokenName: string): Color {
   return new Color(
@@ -86,14 +91,15 @@ export function createNetLaveScene(
   camera.lookAt(0, variant === "field" ? -0.6 : 0.4, 0);
 
   const pmremGenerator = new PMREMGenerator(renderer);
+  let environmentTarget: WebGLRenderTarget | undefined;
   new HDRLoader().load(environmentMapUrl, (environmentTexture) => {
     if (isDisposed) {
       environmentTexture.dispose();
       return;
     }
     environmentTexture.mapping = EquirectangularReflectionMapping;
-    scene.environment =
-      pmremGenerator.fromEquirectangular(environmentTexture).texture;
+    environmentTarget = pmremGenerator.fromEquirectangular(environmentTexture);
+    scene.environment = environmentTarget.texture;
     environmentTexture.dispose();
     renderFrame();
   });
@@ -226,12 +232,17 @@ export function createNetLaveScene(
   }
 
   // Parallax follows the pointer over the whole window, so text laid on top
-  // of the scene doesn't block it.
+  // of the scene doesn't block it. Positions outside the scene are clamped to
+  // its edges so the tilt never exceeds the designed range.
   const pointerTarget = { x: 0, y: 0 };
   const handlePointerMove = (event: PointerEvent) => {
     const bounds = container.getBoundingClientRect();
-    pointerTarget.x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
-    pointerTarget.y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+    pointerTarget.x = clampToUnitRange(
+      ((event.clientX - bounds.left) / bounds.width - 0.5) * 2,
+    );
+    pointerTarget.y = clampToUnitRange(
+      ((event.clientY - bounds.top) / bounds.height - 0.5) * 2,
+    );
   };
   window.addEventListener("pointermove", handlePointerMove);
 
@@ -316,7 +327,7 @@ export function createNetLaveScene(
       }
     });
     waterNormalMap?.dispose();
-    scene.environment?.dispose();
+    environmentTarget?.dispose();
     pmremGenerator.dispose();
     renderer.dispose();
     renderer.domElement.remove();
