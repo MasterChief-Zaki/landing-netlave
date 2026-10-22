@@ -1,4 +1,5 @@
 import layoutStyles from "@/styles/layout.module.scss";
+import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Idea.module.scss";
 
 const ideaSteps = [
@@ -20,21 +21,35 @@ export function Idea() {
   return (
     <section
       id="idea"
-      className={layoutStyles.section}
+      className={`${layoutStyles.section} ${styles.ideaSection}`}
       aria-labelledby="idea-heading"
     >
       <div className={layoutStyles.container}>
-        <p className={layoutStyles.sectionLabel}>
-          <span className={layoutStyles.sectionNumber}>01</span>
-          The idea
-        </p>
-        <h2 id="idea-heading" className={layoutStyles.sectionHeading}>
-          [The problem, or the idea, in one sentence]
-        </h2>
-        <p className={layoutStyles.sectionIntro}>
-          [Two or three sentences on the problem and what the closed cycle
-          changes]
-        </p>
+        <div className={styles.introduction}>
+          <div>
+            <p className={layoutStyles.sectionLabel}>01 — The idea</p>
+            <h2
+              id="idea-heading"
+              className={`${layoutStyles.sectionHeading} ${styles.ideaHeading}`}
+            >
+              [The problem, or the idea, in one sentence]
+            </h2>
+            <p className={layoutStyles.sectionIntro}>
+              [Two or three sentences on the problem and what the closed cycle
+              changes]
+            </p>
+          </div>
+          <figure className={styles.knotFigure}>
+            <NetLaveScene
+              variant="knot"
+              speed={0.8}
+              className={styles.knotScene}
+            />
+            <figcaption className={styles.knotCaption}>
+              Fig. 02 — one loop, three stages
+            </figcaption>
+          </figure>
+        </div>
         <ol className={styles.steps}>
           {ideaSteps.map((ideaStep, stepIndex) => (
             <li key={ideaStep.title} className={styles.step}>

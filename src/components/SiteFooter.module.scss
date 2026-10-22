@@ -1,23 +1,42 @@
+@use "../styles/breakpoints" as *;
+
 .footer {
-  padding-block: var(--space-xl);
+  padding-block: var(--space-2xl) var(--space-xl);
+  border-top: 1px solid var(--color-border);
 }
 
+// The outlined wordmark, with the links and copyright beside it from desktop.
 .footerContent {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-md) var(--space-xl);
+  display: grid;
+  gap: var(--space-xl);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-small);
   color: var(--color-text-muted);
+
+  @media (width >= $desktop-min-width) {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
 }
 
 .wordmark {
-  margin-right: auto;
   font-family: var(--font-family-sans);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--color-text);
+  font-size: var(--font-size-wordmark);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: var(--letter-spacing-display);
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-border);
+}
+
+.footerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+
+  @media (width >= $desktop-min-width) {
+    align-items: flex-end;
+  }
 }
 
 .navigation {

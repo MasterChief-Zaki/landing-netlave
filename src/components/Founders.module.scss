@@ -1,51 +1,105 @@
 @use "../styles/breakpoints" as *;
 
-.founderList {
-  margin-top: var(--space-xl);
+// Founders follows the idea steps directly, so the idea's bottom padding is
+// the only gap. The scroll margin keeps the nav link from landing it flush
+// against the header.
+.foundersSection {
+  padding-top: 0;
+  scroll-margin-top: var(--space-xl);
 }
 
-// Phone: photo beside the name, bio below. Tablet and up: photo, name and bio in one row.
-.founder {
-  display: grid;
-  grid-template-columns: 4.5rem 1fr;
-  gap: var(--space-md);
-  padding-block: var(--space-lg);
-  border-top: 1px solid var(--color-border);
-
+// Heading on the left and, from tablet, the introduction aligned to its baseline on the right.
+.foundersHeader {
   @media (width >= $tablet-min-width) {
-    grid-template-columns: 6rem 16rem 1fr;
-    column-gap: var(--space-xl);
-    padding-block: var(--space-xl);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-xl);
   }
 }
 
-.photoPlaceholder {
+.foundersHeading {
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+}
+
+.foundersIntro {
+  @media (width >= $tablet-min-width) {
+    max-width: 34ch;
+    padding-bottom: 0.75rem;
+    text-align: right;
+    text-wrap: pretty;
+  }
+}
+
+.founderList {
   display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 5;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  background: var(--color-surface);
+  gap: var(--space-2xl);
+  margin-top: var(--space-2xl);
+
+  @media (width >= $tablet-min-width) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+}
+
+// From desktop the three cards sit at staggered heights.
+.founder {
+  @media (width >= $desktop-min-width) {
+    &:nth-child(1) {
+      margin-top: 6rem;
+    }
+
+    &:nth-child(3) {
+      margin-top: 3rem;
+    }
+  }
+}
+
+// Striped placeholder until the founders' photos arrive.
+.portrait {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 14px,
+      color-mix(in srgb, var(--color-text) 4%, transparent) 14px 15px
+    ),
+    var(--color-surface);
   border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+}
+
+.portraitCaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: var(--space-lg);
+  background: linear-gradient(
+    transparent,
+    color-mix(in srgb, var(--color-background) 90%, transparent)
+  );
+}
+
+.founderName {
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
 }
 
 .founderRole {
   margin-top: var(--space-xs);
   font-family: var(--font-family-mono);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-label);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-accent);
 }
 
 .founderBio {
-  grid-column: 1 / -1;
-  max-width: 62ch;
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
   color: var(--color-text-muted);
-
-  @media (width >= $tablet-min-width) {
-    grid-column: auto;
-  }
 }

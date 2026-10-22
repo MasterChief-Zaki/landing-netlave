@@ -1,50 +1,143 @@
 @use "../styles/breakpoints" as *;
 
+// Full-bleed 3D scene with the copy laid over it: category and page meta on
+// top, the headline in the middle, the introduction and figure caption at the bottom.
 .hero {
-  border-bottom: 1px solid var(--color-border);
-}
+  position: relative;
+  display: grid;
+  min-height: calc(100svh - var(--header-height));
+  overflow: hidden;
 
-.heroContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 70svh;
-  padding-block: var(--space-2xl);
-
-  @media (width >= $tablet-min-width) {
-    padding-block: var(--space-3xl);
+  @media (width >= $desktop-min-width) {
+    min-height: 56.25rem;
   }
 }
 
-.eyebrow {
+.heroScene {
+  position: absolute;
+  inset: 0;
+
+  // Darkens the top and bottom of the scene so the copy stays readable.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-background) 20%, transparent),
+      transparent 30%,
+      transparent 55%,
+      color-mix(in srgb, var(--color-background) 85%, transparent)
+    );
+  }
+}
+
+.heroContent {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.topRow,
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-xl);
+}
+
+.topRow {
+  align-items: center;
+}
+
+.bottomRow {
+  align-items: flex-end;
+}
+
+.categoryPill {
+  display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
+  min-height: 1.75rem;
+  padding: var(--space-xs) var(--space-md) var(--space-xs) 0.625rem;
   font-family: var(--font-family-mono);
-  font-size: var(--font-size-small);
-  letter-spacing: 0.14em;
+  font-size: var(--font-size-label);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+  background: color-mix(in srgb, var(--color-background) 50%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
 
   &::before {
     content: "";
     flex: none;
-    width: 1.5rem;
-    height: 1px;
+    width: 0.375rem;
+    height: 0.375rem;
     background: var(--color-accent);
+    border-radius: 50%;
   }
 }
 
+.pageMeta,
+.figureCaption,
+.cycleCaption {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-label);
+}
+
+.pageMeta,
+.figureCaption {
+  display: none;
+  color: var(--color-text-muted);
+
+  @media (width >= $tablet-min-width) {
+    display: block;
+  }
+}
+
+.pageMeta {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.figureCaption {
+  flex: none;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.liveLabel {
+  color: var(--color-accent);
+}
+
 .headline {
-  max-width: 18ch;
-  margin-top: var(--space-md);
+  max-width: 12ch;
+  margin-block: auto;
+  text-wrap: balance;
+}
+
+// From desktop the headline and introduction step in, leaving room for the
+// vertical cycle caption on the left.
+.headline,
+.bottomRow {
+  @media (width >= $desktop-min-width) {
+    padding-left: 3.5rem;
+  }
+}
+
+.introduction {
+  max-width: 27.5rem;
 }
 
 .subheadline {
-  max-width: 52ch;
-  margin-top: var(--space-lg);
   font-size: var(--font-size-lead);
+  line-height: 1.5;
   color: var(--color-text-muted);
+  text-wrap: pretty;
 }
 
 .callsToAction {
@@ -52,4 +145,20 @@
   flex-wrap: wrap;
   gap: var(--space-sm) var(--space-md);
   margin-top: var(--space-xl);
+}
+
+.cycleCaption {
+  position: absolute;
+  bottom: var(--space-2xl);
+  left: var(--page-gutter);
+  display: none;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+
+  @media (width >= $desktop-min-width) {
+    display: block;
+  }
 }

@@ -1,24 +1,45 @@
 import buttonStyles from "@/styles/buttons.module.scss";
 import layoutStyles from "@/styles/layout.module.scss";
+import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Hero.module.scss";
 
 export function Hero() {
   return (
     <section className={styles.hero}>
+      <NetLaveScene variant="both" className={styles.heroScene} />
       <div className={`${layoutStyles.container} ${styles.heroContent}`}>
-        <p className={styles.eyebrow}>[Category, e.g. smart irrigation]</p>
-        <h1 className={styles.headline}>[The pitch in one line]</h1>
-        <p className={styles.subheadline}>
-          [One or two sentences on what NetLave does and who it is for]
-        </p>
-        <div className={styles.callsToAction}>
-          <a className={buttonStyles.primaryButton} href="#contact">
-            Get in touch
-          </a>
-          <a className={buttonStyles.secondaryButton} href="#founders">
-            Meet the founders
-          </a>
+        <div className={styles.topRow}>
+          <p className={styles.categoryPill}>
+            [Category, e.g. smart irrigation]
+          </p>
+          <p className={styles.pageMeta} aria-hidden="true">
+            Founders’ page — 2026
+          </p>
         </div>
+        <h1 className={styles.headline}>[The pitch in one line]</h1>
+        <div className={styles.bottomRow}>
+          <div className={styles.introduction}>
+            <p className={styles.subheadline}>
+              [One or two sentences on what NetLave does and who it is for]
+            </p>
+            <div className={styles.callsToAction}>
+              <a className={buttonStyles.primaryButton} href="#contact">
+                Get in touch
+              </a>
+              <a className={buttonStyles.secondaryButton} href="#founders">
+                Meet the founders
+              </a>
+            </div>
+          </div>
+          <p className={styles.figureCaption} aria-hidden="true">
+            Fig. 01 — the closed cycle
+            <br />
+            <span className={styles.liveLabel}>Live · WebGL</span>
+          </p>
+        </div>
+        <p className={styles.cycleCaption} aria-hidden="true">
+          TSE water → irrigation → power
+        </p>
       </div>
     </section>
   );
