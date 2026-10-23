@@ -1,25 +1,14 @@
-import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { StructuredData } from "@/components/StructuredData";
+import { pageMetadata } from "@/lib/seo";
+import { ibmPlexMono, spaceGrotesk } from "@/styles/fonts";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.scss";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-export const metadata: Metadata = {
-  title: "NetLave — Digital Twin for TSE Forestry",
-  description:
-    "A simulation-driven prototype of self-powered, treated-wastewater forest irrigation in Egypt, built on synthetic site assumptions, not field measurements.",
-};
+export const metadata = pageMetadata(
+  "NetLave — The idea and founders behind TSE forestry",
+  "/",
+);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -28,6 +17,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable}`}
     >
       <body>
+        <StructuredData />
         <SiteHeader />
         {children}
         <SiteFooter />

@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NetLave landing page
 
-## Getting Started
+The founder landing page for NetLave, a simulation-driven prototype of treated-wastewater forestry in Egypt. It introduces the idea, Eyad, Mahmoud, Omar and Hana, and the next steps toward site measurements and validation. Built with Next.js 16, React 19, TypeScript, SCSS modules and a browser-only three.js backdrop; MDX is enabled.
 
-First, run the development server:
+## Run locally
+
+Use Node.js 24 and pnpm. Do not use npm or yarn.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Production: `pnpm build`, then `pnpm start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm lint
+pnpm lint:styles
+pnpm typecheck
+pnpm format:check
+pnpm build
+pnpm exec node scripts/check-shared-truth.mjs
+```
 
-## Learn More
+Add `--siblings` to the final command when all three NetLave repos are adjacent. Follow [AGENTS.md](AGENTS.md) for atomic plain-English commits, branch naming, required hooks and PRs to `main`.
 
-To learn more about Next.js, take a look at the following resources:
+## Content, branding and discovery
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/content/ground-truth.json` and `/ground-truth` contain the same reference as the product site and digital twin. Python in the twin remains the physical authority; this site does not run a simulation or show field telemetry.
+- Assumptions and outcomes are synthetic, not measured savings or regulatory approval. Resource-aware scheduling is experimental, not a replacement for the default smart hysteresis controller.
+- Founder portraits remain in `public/founders/`. Unprovided biographies/roles and the placeholder email are not published; the verified public repository issue tracker provides project contact.
+- The supplied logo, generated favicons, matching fonts, synchronization steps and SEO/GEO setup are documented in [brand and ground truth](docs/brand-and-ground-truth.md).
+- Set `SITE_URL` to this site's verified production origin at build time for canonicals, social cards and sitemap URLs. No production domain is assumed. Preview deployments should remain unindexed.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The WebGL backdrop is decorative. Text, links, portraits and the reference page remain server-rendered and usable without JavaScript.

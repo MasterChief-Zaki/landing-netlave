@@ -1,3 +1,5 @@
 pnpm-lock.yaml
 # Rewritten by `next dev`
 AGENTS.md
+# Local browser captures, not source files
+.playwright-mcp/

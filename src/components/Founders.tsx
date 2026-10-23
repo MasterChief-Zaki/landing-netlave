@@ -1,33 +1,7 @@
 import Image from "next/image";
+import truth from "@/content/ground-truth.json";
 import layoutStyles from "@/styles/layout.module.scss";
 import styles from "./Founders.module.scss";
-
-const founders = [
-  {
-    name: "Eyad",
-    photo: "/founders/eyad.jpeg",
-    role: "[Role, e.g. hardware]",
-    bio: "[Two or three lines: background, relevant work and responsibility in the project]",
-  },
-  {
-    name: "Mahmoud",
-    photo: "/founders/mahmoud.jpeg",
-    role: "[Role]",
-    bio: "[Two or three lines: background, relevant work and responsibility in the project]",
-  },
-  {
-    name: "Omar",
-    photo: "/founders/omar.jpeg",
-    role: "[Role]",
-    bio: "[Two or three lines: background, relevant work and responsibility in the project]",
-  },
-  {
-    name: "Hana",
-    photo: "/founders/hana.jpeg",
-    role: "[Role]",
-    bio: "[Two or three lines: background, relevant work and responsibility in the project]",
-  },
-];
 
 export function Founders() {
   return (
@@ -55,22 +29,21 @@ export function Founders() {
           </p>
         </div>
         <ul className={styles.founderList}>
-          {founders.map((founder) => (
-            <li key={founder.name} className={styles.founder}>
+          {truth.founders.map((name) => (
+            <li key={name} className={styles.founder}>
               <div className={styles.portrait}>
                 <Image
-                  src={founder.photo}
-                  alt={`Portrait of ${founder.name}`}
+                  src={`/founders/${name.toLowerCase()}.jpeg`}
+                  alt={`Portrait of ${name}`}
                   fill
                   sizes="(min-width: 1216px) 250px, (min-width: 1024px) calc((100vw - 216px) / 4), (min-width: 768px) calc((100vw - 104px) / 2), calc(100vw - 40px)"
                   className={styles.portraitImage}
                 />
                 <div className={styles.portraitCaption}>
-                  <h3 className={styles.founderName}>{founder.name}</h3>
-                  <p className={styles.founderRole}>{founder.role}</p>
+                  <h3 className={styles.founderName}>{name}</h3>
+                  <p className={styles.founderRole}>Co-founder</p>
                 </div>
               </div>
-              <p className={styles.founderBio}>{founder.bio}</p>
             </li>
           ))}
         </ul>
