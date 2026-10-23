@@ -4,10 +4,13 @@ import {
   BufferAttribute,
   BufferGeometry,
   Color,
+  CubicBezierCurve,
+  CylinderGeometry,
   DirectionalLight,
   EquirectangularReflectionMapping,
   Fog,
   Group,
+  LatheGeometry,
   Material,
   Mesh,
   MeshPhysicalMaterial,
@@ -18,19 +21,18 @@ import {
   PointsMaterial,
   RepeatWrapping,
   Scene,
+  SphereGeometry,
   Texture,
   TextureLoader,
-  TorusKnotGeometry,
   Vector2,
   WebGLRenderer,
   type WebGLRenderTarget,
 } from "three";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 
-// The three.js visual behind the hero, the idea figure and the contact band:
-// a rippling water surface with a sensor grid above it ("field"), a polished
-// torus knot for the closed cycle ("knot"), or both together.
-export type SceneVariant = "both" | "knot" | "field";
+// Decorative scenes: reclaimed water above a sensor field in the hero,
+// a glass forest grove beside the idea, and a water field behind the contact.
+export type SceneVariant = "both" | "forest" | "field";
 
 interface SceneOptions {
   variant: SceneVariant;
@@ -49,6 +51,133 @@ function readColorToken(element: HTMLElement, tokenName: string): Color {
   return new Color(
     getComputedStyle(element).getPropertyValue(tokenName).trim(),
   );
+}
+
+// Revolve a rounded base and tapered tip into a smooth, closed water droplet.
+function createWaterDropletGeometry(): LatheGeometry {
+  const roundedBase = new CubicBezierCurve(
+    new Vector2(0, -1.8),
+    new Vector2(0.9, -1.8),
+    new Vector2(1.5, -1.25),
+    new Vector2(1.5, -0.4),
+  );
+  const taperedTip = new CubicBezierCurve(
+    new Vector2(1.5, -0.4),
+    new Vector2(1.5, 0.6),
+    new Vector2(0.35, 1.55),
+    new Vector2(0, 2.2),
+  );
+  return new LatheGeometry(
+    [...roundedBase.getPoints(48), ...taperedTip.getPoints(64).slice(1)],
+    96,
+  );
+}
+
+// A stylized broadleaf grove, not a planting plan or a species-specific model.
+function createForestGrove(
+  surfaceColor: Color,
+  foliageColor: Color,
+  accentColor: Color,
+): Group {
+  const forestGrove = new Group();
+  const canopyGeometry = new SphereGeometry(0.62, 32, 24);
+  const trunkGeometry = new CylinderGeometry(0.07, 0.12, 1.3, 16);
+  const branchGeometry = new CylinderGeometry(0.035, 0.055, 0.65, 12);
+  const canopyMaterial = new MeshPhysicalMaterial({
+    color: foliageColor,
+    metalness: 0.35,
+    roughness: 0.16,
+    transmission: 0.15,
+    thickness: 0.8,
+    ior: 1.45,
+    clearcoat: 1,
+    clearcoatRoughness: 0.06,
+    envMapIntensity: 1.2,
+  });
+  const trunkMaterial = new MeshPhysicalMaterial({
+    color: surfaceColor,
+    metalness: 0.5,
+    roughness: 0.25,
+    clearcoat: 1,
+    envMapIntensity: 0.8,
+  });
+  const groveBase = new Mesh(
+    new CylinderGeometry(2.65, 2.65, 0.16, 96),
+    new MeshPhysicalMaterial({
+      color: surfaceColor,
+      metalness: 0.35,
+      roughness: 0.18,
+      clearcoat: 1,
+      envMapIntensity: 0.8,
+    }),
+  );
+  groveBase.position.y = -1.45;
+  forestGrove.add(groveBase);
+
+  const treePlacements = [
+    { x: -1.35, z: -1.2, scale: 1.05 },
+    { x: 0, z: -1.4, scale: 1.35 },
+    { x: 1.3, z: -1.1, scale: 1.1 },
+    { x: -1.45, z: 0.15, scale: 0.9 },
+    { x: 0, z: 0, scale: 1.2 },
+    { x: 1.45, z: 0.3, scale: 0.95 },
+    { x: -0.8, z: 1.4, scale: 0.8 },
+    { x: 0.75, z: 1.35, scale: 0.9 },
+  ];
+  const canopyClusters = [
+    { x: 0, y: 1.65, z: 0, scale: 1 },
+    { x: -0.35, y: 1.25, z: 0.1, scale: 0.8 },
+    { x: 0.35, y: 1.3, z: 0.15, scale: 0.85 },
+    { x: 0, y: 1.25, z: -0.35, scale: 0.8 },
+  ];
+  for (const [treeIndex, placement] of treePlacements.entries()) {
+    const tree = new Group();
+    const trunk = new Mesh(trunkGeometry, trunkMaterial);
+    trunk.position.y = 0.65;
+    tree.add(trunk);
+    for (const direction of [-1, 1]) {
+      const branch = new Mesh(branchGeometry, trunkMaterial);
+      branch.position.set(direction * 0.18, 1.05, 0);
+      branch.rotation.z = -direction * 0.6;
+      tree.add(branch);
+    }
+    for (const cluster of canopyClusters) {
+      const canopy = new Mesh(canopyGeometry, canopyMaterial);
+      canopy.position.set(cluster.x, cluster.y, cluster.z);
+      canopy.scale.set(cluster.scale, cluster.scale * 1.2, cluster.scale);
+      tree.add(canopy);
+    }
+    tree.position.set(placement.x, -1.37, placement.z);
+    tree.scale.setScalar(placement.scale);
+    tree.rotation.y = treeIndex * 0.8;
+    forestGrove.add(tree);
+  }
+
+  // Fine points around the grove retain the visual link to the sensor field.
+  const sensorPositions = new Float32Array(160 * 3);
+  for (let index = 0; index < 160; index++) {
+    const angle = (index / 160) * Math.PI * 2;
+    sensorPositions[index * 3] = Math.cos(angle) * 2.5;
+    sensorPositions[index * 3 + 1] = -1.34;
+    sensorPositions[index * 3 + 2] = Math.sin(angle) * 2.5;
+  }
+  const sensorGeometry = new BufferGeometry();
+  sensorGeometry.setAttribute(
+    "position",
+    new BufferAttribute(sensorPositions, 3),
+  );
+  forestGrove.add(
+    new Points(
+      sensorGeometry,
+      new PointsMaterial({
+        color: accentColor,
+        size: 0.035,
+        transparent: true,
+        opacity: 0.6,
+      }),
+    ),
+  );
+  return forestGrove;
 }
 
 // Builds the scene inside `container` and returns a function that tears it down.
@@ -76,11 +205,12 @@ export function createNetLaveScene(
   const accentColor = readColorToken(container, "--color-accent");
   const backgroundColor = readColorToken(container, "--color-background");
   const surfaceColor = readColorToken(container, "--color-surface");
+  const foliageColor = readColorToken(container, "--color-deep-teal");
   const prefersReducedMotion = matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const showsField = variant !== "knot";
-  const showsKnot = variant !== "field";
+  const showsField = variant !== "forest";
+  const showsDroplet = variant === "both";
   let isDisposed = false;
 
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -92,8 +222,13 @@ export function createNetLaveScene(
   const scene = new Scene();
   if (showsField) scene.fog = new Fog(backgroundColor, 6, 22);
   const camera = new PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(0, variant === "field" ? 1.6 : 2.6, 10);
-  camera.lookAt(0, variant === "field" ? -0.6 : 0.4, 0);
+  if (variant === "forest") {
+    camera.position.set(5.5, 4, 7.5);
+    camera.lookAt(0, 0.1, 0);
+  } else {
+    camera.position.set(0, variant === "field" ? 1.6 : 2.6, 10);
+    camera.lookAt(0, variant === "field" ? -0.6 : 0.4, 0);
+  }
 
   const pmremGenerator = new PMREMGenerator(renderer);
   let environmentTarget: WebGLRenderTarget | undefined;
@@ -183,21 +318,25 @@ export function createNetLaveScene(
     sceneGroup.add(sensorField);
   }
 
-  // The closed cycle: a polished torus knot circled by a ring of droplets.
-  let cycleKnot: Group | undefined;
-  let knotDroplets: Points | undefined;
-  if (showsKnot) {
-    cycleKnot = new Group();
-    cycleKnot.add(
+  // Reclaimed water: a midnight-blue glass droplet with crisp studio reflections.
+  let waterDroplet: Group | undefined;
+  let dropletParticles: Points | undefined;
+  const dropletBaseHeight = 1.1;
+  if (showsDroplet) {
+    waterDroplet = new Group();
+    waterDroplet.add(
       new Mesh(
-        new TorusKnotGeometry(1.5, 0.42, 260, 36, 2, 3),
+        createWaterDropletGeometry(),
         new MeshPhysicalMaterial({
           color: surfaceColor,
-          metalness: 0.9,
-          roughness: 0.28,
+          metalness: 0.65,
+          roughness: 0.12,
+          transmission: 0.12,
+          thickness: 2.4,
+          ior: 1.333,
           clearcoat: 1,
-          clearcoatRoughness: 0.08,
-          envMapIntensity: 1.3,
+          clearcoatRoughness: 0.04,
+          envMapIntensity: 1.5,
         }),
       ),
     );
@@ -205,8 +344,8 @@ export function createNetLaveScene(
     const dropletPositions = new Float32Array(dropletCount * 3);
     for (let dropletIndex = 0; dropletIndex < dropletCount; dropletIndex++) {
       const angle = Math.random() * Math.PI * 2;
-      const radius = 2.6 + Math.random() * 1.2;
-      const height = (Math.random() - 0.5) * 1.6;
+      const radius = 2.1 + Math.random() * 0.7;
+      const height = -0.9 + (Math.random() - 0.5) * 0.8;
       dropletPositions[dropletIndex * 3] = Math.cos(angle) * radius;
       dropletPositions[dropletIndex * 3 + 1] = height;
       dropletPositions[dropletIndex * 3 + 2] = Math.sin(angle) * radius;
@@ -216,7 +355,7 @@ export function createNetLaveScene(
       "position",
       new BufferAttribute(dropletPositions, 3),
     );
-    knotDroplets = new Points(
+    dropletParticles = new Points(
       dropletGeometry,
       new PointsMaterial({
         color: accentColor,
@@ -227,14 +366,16 @@ export function createNetLaveScene(
         depthWrite: false,
       }),
     );
-    cycleKnot.add(knotDroplets);
-    cycleKnot.position.set(
-      variant === "both" ? 3.2 : 0,
-      variant === "both" ? 0.6 : 0.2,
-      0,
-    );
-    sceneGroup.add(cycleKnot);
+    waterDroplet.add(dropletParticles);
+    waterDroplet.position.set(3.2, dropletBaseHeight, 0);
+    sceneGroup.add(waterDroplet);
   }
+
+  const forestGrove =
+    variant === "forest"
+      ? createForestGrove(surfaceColor, foliageColor, accentColor)
+      : undefined;
+  if (forestGrove) sceneGroup.add(forestGrove);
 
   // Parallax follows the pointer over the whole window, so text laid on top
   // of the scene doesn't block it. Positions outside the scene are clamped to
@@ -272,10 +413,15 @@ export function createNetLaveScene(
       }
       sensorField.geometry.attributes.position.needsUpdate = true;
     }
-    if (cycleKnot && knotDroplets) {
-      cycleKnot.rotation.y = elapsedSeconds * 0.22;
-      cycleKnot.rotation.x = Math.sin(elapsedSeconds * 0.15) * 0.25;
-      knotDroplets.rotation.y = -elapsedSeconds * 0.12;
+    if (waterDroplet && dropletParticles) {
+      waterDroplet.position.y =
+        dropletBaseHeight + Math.sin(elapsedSeconds * 0.65) * 0.12;
+      waterDroplet.rotation.x = 0.1 + Math.sin(elapsedSeconds * 0.3) * 0.08;
+      waterDroplet.rotation.z = -0.13 + Math.sin(elapsedSeconds * 0.4) * 0.06;
+      dropletParticles.rotation.y = -elapsedSeconds * 0.12;
+    }
+    if (forestGrove) {
+      forestGrove.rotation.y = Math.sin(elapsedSeconds * 0.15) * 0.12;
     }
     if (!prefersReducedMotion) {
       sceneGroup.rotation.y +=
@@ -325,12 +471,17 @@ export function createNetLaveScene(
     visibilityObserver.disconnect();
     resizeObserver.disconnect();
     window.removeEventListener("pointermove", handlePointerMove);
+    // Trees share geometry and materials; dispose each resource only once.
+    const geometries = new Set<BufferGeometry>();
+    const materials = new Set<Material>();
     scene.traverse((sceneObject) => {
       if (sceneObject instanceof Mesh || sceneObject instanceof Points) {
-        sceneObject.geometry.dispose();
-        (sceneObject.material as Material).dispose();
+        geometries.add(sceneObject.geometry);
+        materials.add(sceneObject.material as Material);
       }
     });
+    geometries.forEach((geometry) => geometry.dispose());
+    materials.forEach((material) => material.dispose());
     waterNormalMap?.dispose();
     environmentTarget?.dispose();
     pmremGenerator.dispose();
