@@ -31,6 +31,9 @@
   --color-on-primary: var(--color-moon);
   --color-accent: var(--color-seafoam);
 
+  // Natural foliage for the decorative forest, separate from the water palette.
+  --color-foliage: #357c3c;
+
   // Typography: the font variables come from next/font in layout.tsx
   --font-family-sans: var(--font-space-grotesk), system-ui, sans-serif;
   --font-family-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;

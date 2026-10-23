@@ -205,7 +205,7 @@ export function createNetLaveScene(
   const accentColor = readColorToken(container, "--color-accent");
   const backgroundColor = readColorToken(container, "--color-background");
   const surfaceColor = readColorToken(container, "--color-surface");
-  const foliageColor = readColorToken(container, "--color-deep-teal");
+  const foliageColor = readColorToken(container, "--color-foliage");
   const prefersReducedMotion = matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
