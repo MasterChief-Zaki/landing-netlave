@@ -40,14 +40,14 @@ export function Idea() {
             </h2>
             <p className={layoutStyles.sectionIntro}>{truth.claimLimit}</p>
           </div>
-          <figure className={styles.knotFigure}>
+          <figure className={styles.forestFigure}>
             <NetLaveScene
-              variant="knot"
+              variant="forest"
               speed={0.8}
-              className={styles.knotScene}
+              className={styles.forestScene}
             />
-            <figcaption className={styles.knotCaption}>
-              Fig. 02 — three connected systems
+            <figcaption className={styles.forestCaption}>
+              Fig. 02 — a forest, sustained by reclaimed water
             </figcaption>
           </figure>
         </div>
