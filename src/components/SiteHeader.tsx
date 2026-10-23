@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import buttonStyles from "@/styles/buttons.module.scss";
 import layoutStyles from "@/styles/layout.module.scss";
@@ -12,7 +13,8 @@ export function SiteHeader() {
       </a>
       <header className={styles.header}>
         <div className={`${layoutStyles.container} ${styles.headerContent}`}>
-          <Link className={styles.wordmark} href="/">
+          <Link className={styles.wordmark} href="/" aria-label="NetLave home">
+            <Image src="/brand/mark.png" alt="" width={36} height={36} />
             NetLave
           </Link>
           <nav className={styles.navigation} aria-label="Primary">
