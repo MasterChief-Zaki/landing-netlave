@@ -34,8 +34,8 @@ export function Contact() {
             Contact the project <span aria-hidden="true">↗</span>
           </a>
           <p>
-            No contact email has been verified. Use the public project issue
-            tracker; do not post private information.
+            No contact email has been verified. Visit the project repository to
+            learn more and follow its development.
           </p>
         </div>
       </div>
