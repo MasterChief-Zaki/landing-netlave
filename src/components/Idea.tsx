@@ -4,16 +4,19 @@ import styles from "./Idea.module.scss";
 
 const ideaSteps = [
   {
-    title: "[Step 1: the water source]",
-    description: "[One sentence on what TSE water is and why it is the input]",
+    title: "Reclaim water for forestry",
+    description:
+      "Treated sewage effluent (TSE) supplies a reservoir for forest irrigation. The prototype models continuous inflow, supply interruptions and overflow.",
   },
   {
-    title: "[Step 2: smart irrigation]",
-    description: "[One sentence on what the system does with the water]",
+    title: "Irrigate with explainable control",
+    description:
+      "A controller requests water for three drip zones: two gravity-fed and one pumped uphill. Safety checks gate delivery on water quality, filtration, storage, hydraulic head and available power.",
   },
   {
-    title: "[Step 3: power for the AI and IoT devices]",
-    description: "[One sentence on how the cycle powers its own devices]",
+    title: "Power within physical limits",
+    description:
+      "Micro-hydro recovers energy from incoming water, while solar and battery storage support the uphill pump and auxiliary loads. Pumping is denied when power or battery reserves are insufficient.",
   },
 ];
 
@@ -32,11 +35,15 @@ export function Idea() {
               id="idea-heading"
               className={`${layoutStyles.sectionHeading} ${styles.ideaHeading}`}
             >
-              [The problem, or the idea, in one sentence]
+              Test a self-powered forest before planting it.
             </h2>
             <p className={layoutStyles.sectionIntro}>
-              [Two or three sentences on the problem and what the closed cycle
-              changes]
+              NetLave models a treated-wastewater-irrigated forest in Egypt,
+              linking water storage, soil moisture and renewable power. Its
+              digital twin lets you explore faults and compare irrigation
+              strategies. The prototype uses synthetic site assumptions, not
+              field measurements, and does not establish real-world savings or
+              regulatory approval.
             </p>
           </div>
           <figure className={styles.knotFigure}>
@@ -46,7 +53,7 @@ export function Idea() {
               className={styles.knotScene}
             />
             <figcaption className={styles.knotCaption}>
-              Fig. 02 — one loop, three stages
+              Fig. 02 — three connected systems
             </figcaption>
           </figure>
         </div>

@@ -45,8 +45,8 @@ export function Founders() {
             </h2>
           </div>
           <p className={`${layoutStyles.sectionIntro} ${styles.foundersIntro}`}>
-            [One line on what the founders share: field, studies or previous
-            work]
+            NetLave brings water, energy and explainable irrigation control
+            together in a simulation-driven forest prototype.
           </p>
         </div>
         <ul className={styles.founderList}>

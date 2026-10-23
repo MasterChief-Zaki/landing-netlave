@@ -9,18 +9,20 @@ export function Hero() {
       <NetLaveScene variant="both" className={styles.heroScene} />
       <div className={`${layoutStyles.container} ${styles.heroContent}`}>
         <div className={styles.topRow}>
-          <p className={styles.categoryPill}>
-            [Category, e.g. smart irrigation]
-          </p>
+          <p className={styles.categoryPill}>Digital twin · TSE forestry</p>
           <p className={styles.pageMeta} aria-hidden="true">
-            Founders’ page — 2026
+            Simulation prototype · Egypt
           </p>
         </div>
-        <h1 className={styles.headline}>[The pitch in one line]</h1>
+        <h1 className={styles.headline}>
+          Reclaimed water. Renewable power. A forest, simulated.
+        </h1>
         <div className={styles.bottomRow}>
           <div className={styles.introduction}>
             <p className={styles.subheadline}>
-              [One or two sentences on what NetLave does and who it is for]
+              NetLave explores self-powered forestry irrigation with treated
+              wastewater. A simulation-driven digital twin makes water, energy
+              and control decisions visible before any real-world deployment.
             </p>
             <div className={styles.callsToAction}>
               <a className={buttonStyles.primaryButton} href="#contact">
@@ -32,13 +34,13 @@ export function Hero() {
             </div>
           </div>
           <p className={styles.figureCaption} aria-hidden="true">
-            Fig. 01 — the closed cycle
+            Fig. 01 — water, energy and control
             <br />
-            <span className={styles.liveLabel}>Live · WebGL</span>
+            <span className={styles.liveLabel}>Animated · WebGL</span>
           </p>
         </div>
         <p className={styles.cycleCaption} aria-hidden="true">
-          TSE water → irrigation → power
+          TSE → micro-hydro → reservoir → irrigation
         </p>
       </div>
     </section>

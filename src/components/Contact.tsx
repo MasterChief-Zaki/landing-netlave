@@ -29,8 +29,8 @@ export function Contact() {
         </div>
         <div>
           <p className={`${layoutStyles.sectionIntro} ${styles.contactIntro}`}>
-            [One sentence on what to reach out about: partnerships, pilots or
-            investment]
+            Talk to us about site surveys, sensors and calibration—the next
+            steps toward testing treated-wastewater forestry beyond simulation.
           </p>
           <a className={styles.emailLink} href={`mailto:${contactEmail}`}>
             {contactEmail} <span aria-hidden="true">↗</span>
