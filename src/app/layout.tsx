@@ -16,8 +16,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NetLave",
-  description: "Meet the founders behind NetLave.",
+  title: "NetLave — Digital Twin for TSE Forestry",
+  description:
+    "A simulation-driven prototype of self-powered, treated-wastewater forest irrigation in Egypt, built on synthetic site assumptions, not field measurements.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
