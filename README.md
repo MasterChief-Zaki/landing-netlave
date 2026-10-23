@@ -13,6 +13,8 @@ pnpm dev
 
 Open http://localhost:3000. Production: `pnpm build`, then `pnpm start`.
 
+See [development troubleshooting](docs/development-troubleshooting.md) for root detection, WebGL cleanup and browser-extension hydration diagnostics.
+
 ## Checks
 
 ```bash

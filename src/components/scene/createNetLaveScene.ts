@@ -56,13 +56,18 @@ export function createNetLaveScene(
   container: HTMLElement,
   { variant, speed }: SceneOptions,
 ): () => void {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("webgl2", {
+    antialias: true,
+    alpha: true,
+    powerPreference: "high-performance",
+  });
+  // No renderer is constructed when WebGL2 is unavailable. The decorative
+  // background remains empty and the server-rendered content stays usable.
+  if (!context) return () => {};
   let renderer: WebGLRenderer;
   try {
-    renderer = new WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
+    renderer = new WebGLRenderer({ canvas, context });
   } catch (error) {
     console.warn("NetLaveScene: WebGL is unavailable", error);
     return () => {};
@@ -330,6 +335,7 @@ export function createNetLaveScene(
     environmentTarget?.dispose();
     pmremGenerator.dispose();
     renderer.dispose();
+    renderer.forceContextLoss();
     renderer.domElement.remove();
   };
 }
