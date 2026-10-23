@@ -1,3 +1,4 @@
+import truth from "@/content/ground-truth.json";
 import layoutStyles from "@/styles/layout.module.scss";
 import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Idea.module.scss";
@@ -35,16 +36,9 @@ export function Idea() {
               id="idea-heading"
               className={`${layoutStyles.sectionHeading} ${styles.ideaHeading}`}
             >
-              Test a self-powered forest before planting it.
+              Test a renewable-powered forest concept before planting it.
             </h2>
-            <p className={layoutStyles.sectionIntro}>
-              NetLave models a treated-wastewater-irrigated forest in Egypt,
-              linking water storage, soil moisture and renewable power. Its
-              digital twin lets you explore faults and compare irrigation
-              strategies. The prototype uses synthetic site assumptions, not
-              field measurements, and does not establish real-world savings or
-              regulatory approval.
-            </p>
+            <p className={layoutStyles.sectionIntro}>{truth.claimLimit}</p>
           </div>
           <figure className={styles.knotFigure}>
             <NetLaveScene

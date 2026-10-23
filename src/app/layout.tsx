@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { StructuredData } from "@/components/StructuredData";
+import { pageMetadata } from "@/lib/seo";
 import { ibmPlexMono, spaceGrotesk } from "@/styles/fonts";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.scss";
 
-export const metadata: Metadata = {
-  title: "NetLave — Digital Twin for TSE Forestry",
-  description:
-    "A simulation-driven prototype of self-powered, treated-wastewater forest irrigation in Egypt, built on synthetic site assumptions, not field measurements.",
-};
+export const metadata = pageMetadata(
+  "NetLave — The idea and founders behind TSE forestry",
+  "/",
+);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -17,6 +17,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable}`}
     >
       <body>
+        <StructuredData />
         <SiteHeader />
         {children}
         <SiteFooter />

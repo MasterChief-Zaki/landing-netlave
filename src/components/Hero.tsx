@@ -1,3 +1,4 @@
+import truth from "@/content/ground-truth.json";
 import buttonStyles from "@/styles/buttons.module.scss";
 import layoutStyles from "@/styles/layout.module.scss";
 import { NetLaveScene } from "./scene/NetLaveScene";
@@ -14,16 +15,10 @@ export function Hero() {
             Simulation prototype · Egypt
           </p>
         </div>
-        <h1 className={styles.headline}>
-          Reclaimed water. Renewable power. A forest, simulated.
-        </h1>
+        <h1 className={styles.headline}>{truth.tagline}</h1>
         <div className={styles.bottomRow}>
           <div className={styles.introduction}>
-            <p className={styles.subheadline}>
-              NetLave explores self-powered forestry irrigation with treated
-              wastewater. A simulation-driven digital twin makes water, energy
-              and control decisions visible before any real-world deployment.
-            </p>
+            <p className={styles.subheadline}>{truth.description}</p>
             <div className={styles.callsToAction}>
               <a className={buttonStyles.primaryButton} href="#contact">
                 Get in touch

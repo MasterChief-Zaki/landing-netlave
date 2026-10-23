@@ -1,9 +1,7 @@
+import truth from "@/content/ground-truth.json";
 import layoutStyles from "@/styles/layout.module.scss";
 import { NetLaveScene } from "./scene/NetLaveScene";
 import styles from "./Contact.module.scss";
-
-// Placeholder until the real founders' address is decided.
-const contactEmail = "founders@example.com";
 
 export function Contact() {
   return (
@@ -32,9 +30,13 @@ export function Contact() {
             Talk to us about site surveys, sensors and calibration—the next
             steps toward testing treated-wastewater forestry beyond simulation.
           </p>
-          <a className={styles.emailLink} href={`mailto:${contactEmail}`}>
-            {contactEmail} <span aria-hidden="true">↗</span>
+          <a className={styles.emailLink} href={truth.contactUrl}>
+            Contact the project <span aria-hidden="true">↗</span>
           </a>
+          <p>
+            No contact email has been verified. Use the public project issue
+            tracker; do not post private information.
+          </p>
         </div>
       </div>
     </section>
