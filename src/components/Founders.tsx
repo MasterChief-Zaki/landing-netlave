@@ -1,24 +1,29 @@
+import Image from "next/image";
 import layoutStyles from "@/styles/layout.module.scss";
 import styles from "./Founders.module.scss";
 
 const founders = [
   {
-    name: "[Founder 1 name]",
+    name: "Eyad",
+    photo: "/founders/eyad.jpeg",
     role: "[Role, e.g. hardware]",
     bio: "[Two or three lines: background, relevant work and responsibility in the project]",
   },
   {
-    name: "[Founder 2 name]",
+    name: "Mahmoud",
+    photo: "/founders/mahmoud.jpeg",
     role: "[Role]",
     bio: "[Two or three lines: background, relevant work and responsibility in the project]",
   },
   {
-    name: "[Founder 3 name]",
+    name: "Omar",
+    photo: "/founders/omar.jpeg",
     role: "[Role]",
     bio: "[Two or three lines: background, relevant work and responsibility in the project]",
   },
   {
-    name: "[Founder 4 name]",
+    name: "Hana",
+    photo: "/founders/hana.jpeg",
     role: "[Role]",
     bio: "[Two or three lines: background, relevant work and responsibility in the project]",
   },
@@ -53,6 +58,13 @@ export function Founders() {
           {founders.map((founder) => (
             <li key={founder.name} className={styles.founder}>
               <div className={styles.portrait}>
+                <Image
+                  src={founder.photo}
+                  alt={`Portrait of ${founder.name}`}
+                  fill
+                  sizes="(min-width: 1216px) 250px, (min-width: 1024px) calc((100vw - 216px) / 4), (min-width: 768px) calc((100vw - 104px) / 2), calc(100vw - 40px)"
+                  className={styles.portraitImage}
+                />
                 <div className={styles.portraitCaption}>
                   <h3 className={styles.founderName}>{founder.name}</h3>
                   <p className={styles.founderRole}>{founder.role}</p>

@@ -66,20 +66,17 @@
   }
 }
 
-// Striped placeholder until the founders' photos arrive.
 .portrait {
   position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background:
-    repeating-linear-gradient(
-      135deg,
-      transparent 0 14px,
-      color-mix(in srgb, var(--color-text) 4%, transparent) 14px 15px
-    ),
-    var(--color-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 0.75rem;
+}
+
+.portraitImage {
+  object-fit: cover;
 }
 
 .portraitCaption {
